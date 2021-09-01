@@ -4,3 +4,5 @@ dist
 dist-ssr
 *.local
 .vscode
+src/data/data.json
+.env
