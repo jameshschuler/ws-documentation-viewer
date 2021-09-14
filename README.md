@@ -2,6 +2,8 @@
 
 ### About
 
+Simple web app to help find your documentation.
+
 ### Running App
 
 -   Rename `sample.env` file to `.env`
