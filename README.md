@@ -8,3 +8,5 @@ Simple web app to help find your documentation.
 
 -   Rename `sample.env` file to `.env`
 -   Rename `sample.data.json` file to `data.json`
+
+### Technology
