@@ -1,4 +1,4 @@
-### WS Documentation Find
+### WS Documentation Finder
 
 ### About
 

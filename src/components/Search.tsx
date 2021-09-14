@@ -31,6 +31,11 @@ function Search({ setFilterBy }: SearchProps) {
 					</span>
 				</p>
 			</div>
+			<div className='buttons'>
+				<button className='button is-success'>1x</button>
+				<button className='button is-info'>2x</button>
+				<button className='button is-danger'>Web Service</button>
+			</div>
 		</div>
 	);
 }

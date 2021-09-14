@@ -21,7 +21,7 @@ function App() {
 	}, []);
 
 	useEffect(() => {
-		if (filterBy.query) {
+		if (filterBy.query && filterBy.query !== '') {
 			setFilteredDocs(
 				docs.filter((doc: Doc) => {
 					if (filterBy.query) {
@@ -31,6 +31,8 @@ function App() {
 					return doc;
 				})
 			);
+		} else {
+			setFilteredDocs(docs);
 		}
 	}, [filterBy]);
 
