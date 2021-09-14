@@ -11,14 +11,38 @@ function App() {
 	const [docs, setDocs] = useState<Doc[]>([]);
 	const [filteredDocs, setFilteredDocs] = useState<Doc[]>([]);
 	const [filterBy, setFilterBy] = useState<FilterBy>({});
+	const [allowFilteringByTag, setAllowFilteringByTag] = useState<boolean>();
+	const [allowFilteringByType, setAllowFilteringByType] = useState<boolean>();
+	const [tags, setTags] = useState<string[]>([]);
+	const [types, setTypes] = useState<string[]>([]);
 
 	useEffect(() => {
+		setAllowFilteringByTag(Boolean(import.meta.env.VITE_ALLOW_FILTERING_BY_TAG));
+		setAllowFilteringByType(Boolean(import.meta.env.VITE_ALLOW_FILTERING_BY_TYPE));
+
 		const data = getDocumentationData();
 
-		// TODO: get unique array of tags and unique array of types to place to Search component to allow the user to filter by those
+		if (data && data.length !== 0) {
+			const tags = data
+				.map((e) => {
+					return e.tags && e.tags.length !== 0 ? e.tags : [];
+				})
+				.flat();
+			setTags([...new Set(tags)]);
+
+			const types = data.map((e) => {
+				return e.type && e.type !== '' ? e.type : '';
+			});
+
+			setTypes([...new Set(types)]);
+		}
+
 		setDocs(data);
-		setFilteredDocs(data);
 	}, []);
+
+	useEffect(() => {
+		setFilteredDocs(docs);
+	}, [docs]);
 
 	useEffect(() => {
 		if (filterBy.query && filterBy.query !== '') {
@@ -44,7 +68,13 @@ function App() {
 					<div className='column is-10 is-offset-1'>
 						<div className='box mt-5'>
 							<h1 className='is-size-2'>Hey hey!</h1>
-							<Search setFilterBy={setFilterBy} />
+							<Search
+								allowFilteringByTag={allowFilteringByTag || false}
+								allowFilteringByType={allowFilteringByType || false}
+								tags={tags}
+								types={types}
+								setFilterBy={setFilterBy}
+							/>
 							<CardList docs={filteredDocs} query={filterBy.query} />
 						</div>
 					</div>

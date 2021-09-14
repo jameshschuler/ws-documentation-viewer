@@ -2,10 +2,14 @@ import React from 'react';
 import { FilterBy } from '../models/filterBy';
 
 interface SearchProps {
+	allowFilteringByTag: boolean;
+	allowFilteringByType: boolean;
+	tags: string[];
+	types: string[];
 	setFilterBy: Function;
 }
 
-function Search({ setFilterBy }: SearchProps) {
+function Search({ allowFilteringByTag, allowFilteringByType, tags, types, setFilterBy }: SearchProps) {
 	function search(query: string) {
 		const filterBy = {
 			query,
@@ -31,11 +35,29 @@ function Search({ setFilterBy }: SearchProps) {
 					</span>
 				</p>
 			</div>
-			<div className='buttons'>
-				<button className='button is-success'>1x</button>
-				<button className='button is-info'>2x</button>
-				<button className='button is-danger'>Web Service</button>
-			</div>
+
+			{allowFilteringByTag && tags.length !== 0 && (
+				<div className='buttons'>
+					{tags.map((tag: string, index: number) => {
+						return (
+							<button className='button is-success is-outlined' key={index}>
+								{tag}
+							</button>
+						);
+					})}
+				</div>
+			)}
+			{allowFilteringByType && types.length !== 0 && (
+				<div className='buttons'>
+					{types.map((type: string, index: number) => {
+						return (
+							<button className='button is-success is-outlined' key={index}>
+								{type}
+							</button>
+						);
+					})}
+				</div>
+			)}
 		</div>
 	);
 }

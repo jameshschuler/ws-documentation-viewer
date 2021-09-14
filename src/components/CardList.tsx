@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Doc } from '../service/dataService';
 import Card from './Card';
 
@@ -8,8 +8,6 @@ interface CardListProps {
 }
 
 function CardList({ docs, query }: CardListProps) {
-	useEffect(() => {}, [docs]);
-
 	return (
 		<div className='columns is-multiline'>
 			{docs.length === 0 && (
