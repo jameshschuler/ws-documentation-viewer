@@ -4,7 +4,7 @@ import Card from './Card';
 
 interface CardListProps {
 	docs: Doc[];
-	query?: string;
+	query: string | null;
 }
 
 function CardList({ docs, query }: CardListProps) {

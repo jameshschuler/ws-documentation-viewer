@@ -49,6 +49,10 @@ function App() {
 	}, [docs]);
 
 	useEffect(() => {
+		filterDocs();
+	}, [filterBy]);
+
+	function filterDocs() {
 		let filtered = docs;
 
 		if (filterBy.query && filterBy.query !== '') {
@@ -64,13 +68,13 @@ function App() {
 		}
 
 		if (filterBy.tags.length !== 0) {
-			// filtered = filtered.filter((doc: Doc) => {
-			// 	return doc.types.some((t: string) => filterBy.types.indexOf(t) >= 0);
-			// });
+			filtered = filtered.filter((doc: Doc) => {
+				return doc.tags.some((t: string) => filterBy.tags.indexOf(t) >= 0);
+			});
 		}
 
 		setFilteredDocs(filtered);
-	}, [filterBy]);
+	}
 
 	return (
 		<>

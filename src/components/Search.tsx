@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FilterBy } from '../models/filterBy';
 
 interface SearchProps {
@@ -10,14 +10,42 @@ interface SearchProps {
 }
 
 function Search({ allowFilteringByTag, allowFilteringByType, tags, types, setFilterBy }: SearchProps) {
+	const [filterState, setFilterState] = useState<FilterBy>({
+		query: null,
+		tags: [],
+		types: [],
+	});
+
+	useEffect(() => {
+		setFilterBy(filterState);
+	}, [filterState]);
+
 	function search(query: string) {
 		const filterBy = {
+			...filterState,
 			query,
-			tags: [],
-			types: [],
 		} as FilterBy;
 
-		setFilterBy(filterBy);
+		setFilterState(filterBy);
+	}
+
+	function toggleTagFilter(tag: string) {}
+
+	function toggleTypeFilter(type: string) {
+		let types = new Array<string>();
+
+		if (!filterState.types.includes(type)) {
+			types = [...filterState.types, type];
+		} else {
+			types = filterState.types.filter((t) => t !== type);
+		}
+
+		const filterBy = {
+			...filterState,
+			types,
+		} as FilterBy;
+
+		setFilterState(filterBy);
 	}
 
 	return (
@@ -42,18 +70,27 @@ function Search({ allowFilteringByTag, allowFilteringByType, tags, types, setFil
 				<div className='buttons'>
 					{types.map((type: string, index: number) => {
 						return (
-							<button className='button is-success is-outlined' key={index}>
+							<button
+								className={`button is-info ${!filterState.types.includes(type) && 'is-outlined'}`}
+								key={index}
+								onClick={() => toggleTypeFilter(type)}
+							>
 								{type}
 							</button>
 						);
 					})}
 				</div>
 			)}
+
 			{allowFilteringByTag && tags.length !== 0 && (
 				<div className='buttons'>
 					{tags.map((tag: string, index: number) => {
 						return (
-							<button className='button is-success is-outlined' key={index}>
+							<button
+								className={`button is-info is-outlined ${!filterState.tags.includes(tag) && 'is-outlined'}`}
+								key={index}
+								onClick={() => toggleTagFilter(tag)}
+							>
 								{tag}
 							</button>
 						);
