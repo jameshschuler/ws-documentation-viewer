@@ -13,6 +13,8 @@ function Search({ allowFilteringByTag, allowFilteringByType, tags, types, setFil
 	function search(query: string) {
 		const filterBy = {
 			query,
+			tags: [],
+			types: [],
 		} as FilterBy;
 
 		setFilterBy(filterBy);
@@ -36,23 +38,23 @@ function Search({ allowFilteringByTag, allowFilteringByType, tags, types, setFil
 				</p>
 			</div>
 
-			{allowFilteringByTag && tags.length !== 0 && (
-				<div className='buttons'>
-					{tags.map((tag: string, index: number) => {
-						return (
-							<button className='button is-success is-outlined' key={index}>
-								{tag}
-							</button>
-						);
-					})}
-				</div>
-			)}
 			{allowFilteringByType && types.length !== 0 && (
 				<div className='buttons'>
 					{types.map((type: string, index: number) => {
 						return (
 							<button className='button is-success is-outlined' key={index}>
 								{type}
+							</button>
+						);
+					})}
+				</div>
+			)}
+			{allowFilteringByTag && tags.length !== 0 && (
+				<div className='buttons'>
+					{tags.map((tag: string, index: number) => {
+						return (
+							<button className='button is-success is-outlined' key={index}>
+								{tag}
 							</button>
 						);
 					})}

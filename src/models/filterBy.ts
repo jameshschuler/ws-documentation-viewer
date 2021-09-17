@@ -1,5 +1,5 @@
 export interface FilterBy {
-	query?: string;
+	query: string | null;
 	tags: string[];
 	types: string[];
 }

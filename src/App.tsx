@@ -10,7 +10,11 @@ import './styles/app.scss';
 function App() {
 	const [docs, setDocs] = useState<Doc[]>([]);
 	const [filteredDocs, setFilteredDocs] = useState<Doc[]>([]);
-	const [filterBy, setFilterBy] = useState<FilterBy>({});
+	const [filterBy, setFilterBy] = useState<FilterBy>({
+		query: null,
+		tags: [],
+		types: [],
+	});
 	const [allowFilteringByTag, setAllowFilteringByTag] = useState<boolean>();
 	const [allowFilteringByType, setAllowFilteringByType] = useState<boolean>();
 	const [tags, setTags] = useState<string[]>([]);
@@ -45,19 +49,27 @@ function App() {
 	}, [docs]);
 
 	useEffect(() => {
-		if (filterBy.query && filterBy.query !== '') {
-			setFilteredDocs(
-				docs.filter((doc: Doc) => {
-					if (filterBy.query) {
-						return doc.name.toLowerCase().includes(filterBy.query.toLowerCase());
-					}
+		let filtered = docs;
 
-					return doc;
-				})
-			);
-		} else {
-			setFilteredDocs(docs);
+		if (filterBy.query && filterBy.query !== '') {
+			filtered = filtered.filter((doc: Doc) => {
+				return doc.name.toLowerCase().includes(filterBy.query!.toLowerCase());
+			});
 		}
+
+		if (filterBy.types.length !== 0) {
+			filtered = filtered.filter((doc: Doc) => {
+				return filterBy.types.includes(doc.type);
+			});
+		}
+
+		if (filterBy.tags.length !== 0) {
+			// filtered = filtered.filter((doc: Doc) => {
+			// 	return doc.types.some((t: string) => filterBy.types.indexOf(t) >= 0);
+			// });
+		}
+
+		setFilteredDocs(filtered);
 	}, [filterBy]);
 
 	return (
