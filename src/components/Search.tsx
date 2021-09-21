@@ -29,7 +29,22 @@ function Search({ allowFilteringByTag, allowFilteringByType, tags, types, setFil
 		setFilterState(filterBy);
 	}
 
-	function toggleTagFilter(tag: string) {}
+	function toggleTagFilter(tag: string) {
+		let tags = new Array<string>();
+
+		if (!filterState.tags.includes(tag)) {
+			tags = [...filterState.tags, tag];
+		} else {
+			tags = filterState.tags.filter((t) => t !== tag);
+		}
+
+		const filterBy = {
+			...filterState,
+			tags,
+		} as FilterBy;
+
+		setFilterState(filterBy);
+	}
 
 	function toggleTypeFilter(type: string) {
 		let types = new Array<string>();
@@ -49,7 +64,7 @@ function Search({ allowFilteringByTag, allowFilteringByType, tags, types, setFil
 	}
 
 	return (
-		<div className='box my-5'>
+		<div className='box mb-5 mt-3'>
 			<h1 className='is-size-3 mb-3'>Filter by...</h1>
 			<div className='field'>
 				<p className='control has-icons-right'>
@@ -87,7 +102,7 @@ function Search({ allowFilteringByTag, allowFilteringByType, tags, types, setFil
 					{tags.map((tag: string, index: number) => {
 						return (
 							<button
-								className={`button is-info is-outlined ${!filterState.tags.includes(tag) && 'is-outlined'}`}
+								className={`button is-info ${!filterState.tags.includes(tag) && 'is-outlined'}`}
 								key={index}
 								onClick={() => toggleTagFilter(tag)}
 							>

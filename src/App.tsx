@@ -28,14 +28,14 @@ function App() {
 
 		if (data && data.length !== 0) {
 			const tags = data
-				.map((e) => {
-					return e.tags && e.tags.length !== 0 ? e.tags : [];
+				.map((doc: Doc) => {
+					return doc.tags && doc.tags.length !== 0 ? doc.tags : [];
 				})
 				.flat();
 			setTags([...new Set(tags)]);
 
-			const types = data.map((e) => {
-				return e.type && e.type !== '' ? e.type : '';
+			const types = data.map((doc: Doc) => {
+				return doc.type && doc.type !== '' ? doc.type : '';
 			});
 
 			setTypes([...new Set(types)]);
@@ -83,7 +83,6 @@ function App() {
 				<div className='columns'>
 					<div className='column is-10 is-offset-1'>
 						<div className='box mt-5'>
-							<h1 className='is-size-2'>Hey hey!</h1>
 							<Search
 								allowFilteringByTag={allowFilteringByTag || false}
 								allowFilteringByType={allowFilteringByType || false}
