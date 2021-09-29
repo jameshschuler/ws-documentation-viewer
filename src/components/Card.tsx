@@ -3,9 +3,11 @@ import { Doc } from '../service/dataService';
 
 interface CardProps {
 	doc: Doc;
+	isBookmarked: boolean;
+	toggleBookmark: Function;
 }
 
-function Card({ doc }: CardProps) {
+function Card({ doc, isBookmarked, toggleBookmark }: CardProps) {
 	function getTagColor(type: string) {
 		let colorClass = 'is-info';
 
@@ -37,9 +39,14 @@ function Card({ doc }: CardProps) {
 								);
 							})}
 						</span>
-						<a href={doc.url} target='_blank'>
-							<i className='fas fa-fw fa-external-link-alt'></i>
-						</a>
+						<div>
+							<span className='mr-1 is-clickable has-text-info' onClick={() => toggleBookmark(doc)}>
+								<i className={`${isBookmarked ? 'fas' : 'far'} fa-fw fa-bookmark`}></i>
+							</span>
+							<a href={doc.url} target='_blank'>
+								<i className='fas fa-fw fa-external-link-alt'></i>
+							</a>
+						</div>
 					</h1>
 				</div>
 				<div className='card-content'>
